@@ -7,7 +7,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-
+// разные слова цветами
+// контрл + с сохранить
+//нумерация строк
+//резиновый интерфейс
 namespace TFLab
 {
     public partial class MainForm : Form
@@ -39,7 +42,6 @@ namespace TFLab
         {
             SaveInFile(); 
         }
-
         private void bNew_Click(object sender, EventArgs e)
         {
             CreateFile(); 
@@ -47,10 +49,6 @@ namespace TFLab
         private void tsCreate_Click(object sender, EventArgs e)
         {
             CreateFile(); 
-        }
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            
         }
 
         private void tsOpen_Click(object sender, EventArgs e)
@@ -63,10 +61,6 @@ namespace TFLab
             if (!isSave && currentOpenFile != string.Empty)
             {
                 File.WriteAllText(currentOpenFile, tbCode.Text); 
-                //FileStream file = new FileStream(currentOpenFile, FileMode.Open);
-                //byte[] arr = System.Text.Encoding.Default.GetBytes(tbCode.Text);
-                //file.Write(arr, 0, arr.Length);
-                //file.Close();
                 isSave = true; 
             }
         }
@@ -107,6 +101,7 @@ namespace TFLab
             if (OFD.ShowDialog() == DialogResult.OK)
             {
                 SaveInFile();
+                isSave = false; 
                 currentOpenFile = OFD.FileName;
                 tbCode.Text = File.ReadAllText(currentOpenFile);
                 label1.Visible = true;
@@ -188,19 +183,35 @@ namespace TFLab
 
         private void tsExit_Click(object sender, EventArgs e)
         {
-            Exit(); 
+            ExitProg(); 
         }
 
-        void Exit()
+        void ExitProg()
         {
             if (currentOpenFile != string.Empty && !isSave)
                 if (MessageBox.Show("У вас есть несохранённые изменения в открытом документе. \nСохранить изменения?", "Сохранить файл?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     SaveInFile();
-            Application.Exit();
+            Environment.Exit(0); 
         }
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Exit(); 
+            ExitProg(); 
+        }
+
+        private void tsSaveAs_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog SaveFileDialog = new SaveFileDialog();
+            SaveFileDialog.Title = "Savw a file";
+            SaveFileDialog.Filter = "CSharpFile|*.cs";
+            var pressBut = SaveFileDialog.ShowDialog();
+
+            if (pressBut == DialogResult.OK)
+                File.WriteAllText(SaveFileDialog.FileName, tbCode.Text);
+        }
+
+        private void tsAbout_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

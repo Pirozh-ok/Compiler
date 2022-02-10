@@ -132,8 +132,9 @@ namespace TFLab
             // tsSaveAs
             // 
             this.tsSaveAs.Name = "tsSaveAs";
-            this.tsSaveAs.Size = new System.Drawing.Size(192, 26);
+            this.tsSaveAs.Size = new System.Drawing.Size(224, 26);
             this.tsSaveAs.Text = "Сохранить как";
+            this.tsSaveAs.Click += new System.EventHandler(this.tsSaveAs_Click);
             // 
             // tsExit
             // 
@@ -292,8 +293,9 @@ namespace TFLab
             // tsAbout
             // 
             this.tsAbout.Name = "tsAbout";
-            this.tsAbout.Size = new System.Drawing.Size(197, 26);
+            this.tsAbout.Size = new System.Drawing.Size(224, 26);
             this.tsAbout.Text = "О программе";
+            this.tsAbout.Click += new System.EventHandler(this.tsAbout_Click);
             // 
             // tbResult
             // 
@@ -398,6 +400,7 @@ namespace TFLab
             // 
             // tbCode
             // 
+            this.tbCode.AcceptsTab = true;
             this.tbCode.Font = new System.Drawing.Font("Consolas", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbCode.Location = new System.Drawing.Point(12, 103);
             this.tbCode.Name = "tbCode";
