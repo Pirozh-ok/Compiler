@@ -1,5 +1,5 @@
 ﻿
-namespace TFLab
+namespace Compiler
 {
     partial class MainForm
     {
@@ -132,7 +132,7 @@ namespace TFLab
             // tsSaveAs
             // 
             this.tsSaveAs.Name = "tsSaveAs";
-            this.tsSaveAs.Size = new System.Drawing.Size(224, 26);
+            this.tsSaveAs.Size = new System.Drawing.Size(192, 26);
             this.tsSaveAs.Text = "Сохранить как";
             this.tsSaveAs.Click += new System.EventHandler(this.tsSaveAs_Click);
             // 
@@ -293,14 +293,13 @@ namespace TFLab
             // tsAbout
             // 
             this.tsAbout.Name = "tsAbout";
-            this.tsAbout.Size = new System.Drawing.Size(224, 26);
+            this.tsAbout.Size = new System.Drawing.Size(197, 26);
             this.tsAbout.Text = "О программе";
             this.tsAbout.Click += new System.EventHandler(this.tsAbout_Click);
             // 
             // tbResult
             // 
-            this.tbResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.tbResult.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbResult.Location = new System.Drawing.Point(12, 407);
             this.tbResult.Multiline = true;
@@ -345,6 +344,7 @@ namespace TFLab
             // 
             // bCut
             // 
+            this.bCut.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.bCut.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bCut.BackgroundImage")));
             this.bCut.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.bCut.Location = new System.Drawing.Point(450, 31);
@@ -356,6 +356,7 @@ namespace TFLab
             // 
             // bRight
             // 
+            this.bRight.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.bRight.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bRight.BackgroundImage")));
             this.bRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.bRight.Location = new System.Drawing.Point(324, 31);
@@ -367,6 +368,7 @@ namespace TFLab
             // 
             // bLeft
             // 
+            this.bLeft.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.bLeft.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bLeft.BackgroundImage")));
             this.bLeft.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.bLeft.Location = new System.Drawing.Point(260, 31);
@@ -378,6 +380,7 @@ namespace TFLab
             // 
             // bPaste
             // 
+            this.bPaste.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.bPaste.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bPaste.BackgroundImage")));
             this.bPaste.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.bPaste.Location = new System.Drawing.Point(513, 31);
@@ -389,6 +392,7 @@ namespace TFLab
             // 
             // bCopy
             // 
+            this.bCopy.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.bCopy.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bCopy.BackgroundImage")));
             this.bCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.bCopy.Location = new System.Drawing.Point(387, 31);
@@ -401,6 +405,9 @@ namespace TFLab
             // tbCode
             // 
             this.tbCode.AcceptsTab = true;
+            this.tbCode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbCode.Font = new System.Drawing.Font("Consolas", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbCode.Location = new System.Drawing.Point(12, 103);
             this.tbCode.Name = "tbCode";
@@ -421,6 +428,7 @@ namespace TFLab
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(13, 381);
             this.label2.Name = "label2";
@@ -431,6 +439,7 @@ namespace TFLab
             // 
             // MainForm
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 566);
@@ -448,9 +457,13 @@ namespace TFLab
             this.Controls.Add(this.tbResult);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(650, 500);
             this.Name = "MainForm";
             this.Text = "Compiler";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

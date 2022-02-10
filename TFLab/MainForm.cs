@@ -2,26 +2,46 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 // разные слова цветами
-// контрл + с сохранить
 //нумерация строк
-//резиновый интерфейс
-namespace TFLab
-{
+// индикатор сохранённости 
+// написать справку и о программе
+//по щелчку на ошибку, указывать строку в коде
+//изменение во время работы программы размера области кода и результатов
+//при изменении кода, файл становится не сохранённым (флаг) - поправаить при созданнии/открытии файла isSave = true;
+// System.ComponentModel.Win32Exception: "Ошибка при создании дескриптора окна."
+// изменять цвет команд во время их ввода (динамически)
+
+namespace Compiler
+{ 
     public partial class MainForm : Form
     {
         ToolTip[] tips = new ToolTip[8];
         string currentOpenFile = string.Empty;
-        bool isSave = false; 
-    public MainForm()
+        bool isSave = false;
+        public MainForm()
         {
             InitializeComponent();
-            tips[0] = new ToolTip();  
+            initTips();
+        }
+        public MainForm(string fileName)
+        {
+            InitializeComponent();
+            initTips();
+            SettingOpen(fileName); 
+        }
+
+        void initTips()
+        {
+            KeyPreview = true;
+
+            tips[0] = new ToolTip();
             tips[0].SetToolTip(bPaste, "Вставить");
             tips[1] = new ToolTip();
             tips[1].SetToolTip(bCut, "Вырезать");
@@ -50,7 +70,6 @@ namespace TFLab
         {
             CreateFile(); 
         }
-
         private void tsOpen_Click(object sender, EventArgs e)
         {
             OpenFile(); 
@@ -90,6 +109,7 @@ namespace TFLab
                 label2.Visible = true;
                 tbCode.Visible = true;
                 tbResult.Visible = true;
+                this.Text = "Compiler (" + currentOpenFile + ")";
             }    
         }
         void OpenFile()
@@ -100,17 +120,22 @@ namespace TFLab
 
             if (OFD.ShowDialog() == DialogResult.OK)
             {
-                SaveInFile();
-                isSave = false; 
-                currentOpenFile = OFD.FileName;
-                tbCode.Text = File.ReadAllText(currentOpenFile);
-                label1.Visible = true;
-                tbCode.Visible = true;
-                label2.Visible = true; 
-                tbResult.Visible = true;
+                SettingOpen(OFD.FileName); 
             }
         }
-
+        void SettingOpen(string nameFile)
+        {
+            SaveInFile();
+            isSave = false;
+            currentOpenFile = nameFile;
+            tbCode.Text = File.ReadAllText(currentOpenFile);
+            label1.Visible = true;
+            tbCode.Visible = true;
+            label2.Visible = true;
+            tbResult.Visible = true;
+            this.Text = "Compiler (" + currentOpenFile + ")";
+            TextColors.AddColor(ref tbCode); 
+        }
         private void bOpen_Click(object sender, EventArgs e)
         {
             OpenFile(); 
@@ -188,10 +213,15 @@ namespace TFLab
 
         void ExitProg()
         {
-            if (currentOpenFile != string.Empty && !isSave)
-                if (MessageBox.Show("У вас есть несохранённые изменения в открытом документе. \nСохранить изменения?", "Сохранить файл?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    SaveInFile();
-            Environment.Exit(0); 
+            try
+            {
+                if (currentOpenFile != string.Empty && !isSave)
+                    if (MessageBox.Show("У вас есть несохранённые изменения в открытом документе. \nСохранить изменения?", "Сохранить файл?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        SaveInFile();
+                Environment.Exit(0);
+            }
+            catch(System.ComponentModel.Win32Exception ex)
+            { }
         }
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -211,7 +241,47 @@ namespace TFLab
 
         private void tsAbout_Click(object sender, EventArgs e)
         {
+            try
+            {
+                MessageBox.Show(Application.StartupPath);
+                Process.Start(Application.StartupPath + @"\aboutProg.txt");
+            }
+            catch
+            { }
+        }
 
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.S && e.Control)
+                SaveInFile(); 
+        }
+
+        private void MainForm_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (isFileValid(files[0]))
+                {
+                    e.Effect = DragDropEffects.Copy;
+                }
+            }
+        }
+
+        private void MainForm_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (isFileValid(files[0]))
+            {
+                e.Effect = DragDropEffects.Copy;
+                SettingOpen(files[0]);
+            }
+        }
+
+        private bool isFileValid(string filename)
+        {
+            //Проверяем, что можем принять такой файл по расширению
+            return Path.GetExtension(filename) == ".cs";
         }
     }
 
