@@ -10,69 +10,80 @@ namespace Compiler
 {
     static class TextColors
     {
-        static List<string> blueComands = new List<string>()
+        static Dictionary<Color, List<string>> dictColorComands = new Dictionary<Color, List<string>>()
         {
-            "int",
-            "float",
-            "double",
-            "string",
-            "class",
-            "static",
-            "void",
-            "new",
-            "namespace",
-            "bool",
-            "true",
-            "false",
-            "null",
-            "struct",
-            "public",
-            "private",
-            "protected",
-            "abstract",
-            "ovveride",
-            "using"
-        };
+            {Color.Blue, new List<string>()
+                {
+                "int",
+                "float",
+                "double",
+                "string",
+                "class",
+                "static",
+                "void",
+                "new",
+                "namespace",
+                "bool",
+                "true",
+                "false",
+                "null",
+                "struct",
+                "public",
+                "private",
+                "protected",
+                "abstract",
+                "ovveride",
+                "using",
+                "ref",
+                "out"
+            } },
 
-        static List<string> purpleComands = new List<string>()
-        {
-            "if",
-            "else",
-            "break",
-            "return",
-            "try",
-            "catch",
-            "switch",
-            "case",
-            "default",
+            {Color.Purple, new List<string>()
+            {
+                "if",
+                "else",
+                "break",
+                "return",
+                "try",
+                "catch",
+                "switch",
+                "case",
+                "default",
+            }},
+
+            {Color.Green, new List<string>()
+            {
+                "Programm",
+                "String",
+                "Int",
+                "Double",
+                "Float",
+                "List",
+                "Array",
+            }}
         };
+       
         public static void AddColor(ref RichTextBox textBox)
         {
-            int i = 0, startCom, endCom;
-            string comand;
+            int i, startCom;
 
-            while (i < textBox.Text.Length)
+            foreach (var current in dictColorComands)
             {
-                startCom = i;
-                comand = string.Empty;
-                while (i < textBox.Text.Length && Char.IsLetter(textBox.Text[i]))
+                foreach (var comand in current.Value)
                 {
-                    comand += textBox.Text[i];
-                    i++;
-                }
-                endCom = i;
-                if (blueComands.FirstOrDefault(x => x == comand) != null)
-                {
-                    textBox.Select(startCom, endCom - startCom + 1);
-                    textBox.SelectionColor = Color.Blue;
-                }
-                else if (purpleComands.FirstOrDefault(x => x == comand) != null)
-                {
-                    textBox.Select(startCom, endCom - startCom + 1);
-                    textBox.SelectionColor = Color.Purple;
-                }
+                    i = 0; 
+                    while (true)
+                    {
+                        startCom = textBox.Text.IndexOf(comand, i);
+                        if (startCom == -1) break;
+                        i = startCom;
+                        while (i < textBox.Text.Length && char.IsLetter(textBox.Text[i]))
+                            i++;
 
-                i++;
+                        textBox.Select(startCom, i - startCom);
+                        textBox.SelectionColor = current.Key;
+                    }
+                }
             }
         }
     }
