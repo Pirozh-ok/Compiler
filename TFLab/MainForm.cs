@@ -24,6 +24,7 @@ namespace Compiler
     {
         ToolTip[] tips = new ToolTip[8];
         string currentOpenFile = string.Empty;
+        string lastComand = string.Empty;
         bool isSave = false;
         public MainForm()
         {
@@ -282,6 +283,42 @@ namespace Compiler
         {
             //Проверяем, что можем принять такой файл по расширению
             return Path.GetExtension(filename) == ".cs";
+        }
+        private void tbCode_TextChanged(object sender, EventArgs e)
+        {
+            int mousePos = tbCode.SelectionStart; 
+
+            if (tbCode.Text != string.Empty)
+            {
+                string str = string.Empty;
+                int j = tbCode.SelectionStart;
+                int i = j - 1; 
+                while (i >= 0 && char.IsLetter(tbCode.Text[i]))
+                {
+                    str = str.Insert(0, tbCode.Text[i].ToString());
+                    i--;
+                }
+                while (j < tbCode.Text.Length && char.IsLetter(tbCode.Text[j]))
+                {
+                    str = str.Insert(str.Length, tbCode.Text[j].ToString());
+                    j++; 
+                }
+                if(!string.IsNullOrEmpty(str))
+                    TextColors.func(tbCode, str);
+                tbCode.SelectionStart = mousePos;
+                tbCode.SelectionLength = 0; 
+                tbCode.SelectionColor = Color.Black;
+                /* if (char.IsLetter(tbCode.Text.Last()))
+                 {
+                     lastComand += tbCode.Text.Last();
+                     TextColors.func(tbCode, lastComand);
+                     tbCode.SelectionStart = tbCode.TextLength;
+                     tbCode.SelectionColor = Color.Black; 
+                     tbCode.Sta
+                     //tbCode.DeselectAll(); 
+                 }
+                 else lastComand = string.Empty;*/
+            }
         }
     }
 

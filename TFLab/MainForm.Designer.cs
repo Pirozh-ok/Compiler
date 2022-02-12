@@ -415,6 +415,7 @@ namespace Compiler
             this.tbCode.TabIndex = 13;
             this.tbCode.Text = "";
             this.tbCode.Visible = false;
+            this.tbCode.TextChanged += new System.EventHandler(this.tbCode_TextChanged);
             // 
             // label1
             // 

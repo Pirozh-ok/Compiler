@@ -10,6 +10,7 @@ namespace Compiler
 {
     static class TextColors
     {
+        static Color defaultColor = Color.Black; 
         static Dictionary<Color, List<string>> dictColorComands = new Dictionary<Color, List<string>>()
         {
             {Color.Blue, new List<string>()
@@ -35,7 +36,9 @@ namespace Compiler
                 "ovveride",
                 "using",
                 "ref",
-                "out"
+                "out",
+                "for",
+                "foreach"
             } },
 
             {Color.Purple, new List<string>()
@@ -85,6 +88,21 @@ namespace Compiler
                     }
                 }
             }
+        }
+
+        public static void func(RichTextBox tbCode,string inputCommand)
+        {
+            foreach (var current in dictColorComands)
+            {
+                if (current.Value.FirstOrDefault(x => x == inputCommand) != null)
+                {
+                    tbCode.Select(tbCode.Text.IndexOf(inputCommand), inputCommand.Length);
+                    tbCode.SelectionColor = current.Key;
+                    return;
+                }
+            }
+            tbCode.Select(tbCode.Text.IndexOf(inputCommand), inputCommand.Length);
+            tbCode.SelectionColor = defaultColor;
         }
     }
 }
