@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-// разные слова цветами
+
 //нумерация строк
 // индикатор сохранённости 
 // написать справку и о программе
@@ -110,6 +110,7 @@ namespace Compiler
                 label2.Visible = true;
                 tbCode.Visible = true;
                 tbResult.Visible = true;
+                spliter.Visible = true; 
                 this.Text = "Compiler (" + currentOpenFile + ")";
             }    
         }
@@ -134,6 +135,7 @@ namespace Compiler
             tbCode.Visible = true;
             label2.Visible = true;
             tbResult.Visible = true;
+            spliter.Visible = true; 
             this.Text = "Compiler (" + currentOpenFile + ")";
             TextColors.AddColor(ref tbCode); 
         }
@@ -290,36 +292,24 @@ namespace Compiler
 
             if (tbCode.Text != string.Empty)
             {
-                string str = string.Empty;
+                string currentWord = string.Empty;
                 int j = tbCode.SelectionStart;
                 int i = j - 1; 
+                // выделяем слово в обе стороны
                 while (i >= 0 && char.IsLetter(tbCode.Text[i]))
                 {
-                    str = str.Insert(0, tbCode.Text[i].ToString());
+                    currentWord = currentWord.Insert(0, tbCode.Text[i].ToString());
                     i--;
                 }
                 while (j < tbCode.Text.Length && char.IsLetter(tbCode.Text[j]))
                 {
-                    str = str.Insert(str.Length, tbCode.Text[j].ToString());
+                    currentWord = currentWord.Insert(currentWord.Length, tbCode.Text[j].ToString());
                     j++; 
                 }
-                if(!string.IsNullOrEmpty(str))
-                    TextColors.func(tbCode, str);
-                tbCode.SelectionStart = mousePos;
-                tbCode.SelectionLength = 0; 
-                tbCode.SelectionColor = Color.Black;
-                /* if (char.IsLetter(tbCode.Text.Last()))
-                 {
-                     lastComand += tbCode.Text.Last();
-                     TextColors.func(tbCode, lastComand);
-                     tbCode.SelectionStart = tbCode.TextLength;
-                     tbCode.SelectionColor = Color.Black; 
-                     tbCode.Sta
-                     //tbCode.DeselectAll(); 
-                 }
-                 else lastComand = string.Empty;*/
+                // ищем слово в словаре и если есть, окрашиваем
+                if(!string.IsNullOrEmpty(currentWord))
+                    TextColors.AddColor(tbCode, currentWord, mousePos, i+1, j-1);
             }
         }
     }
-
 }

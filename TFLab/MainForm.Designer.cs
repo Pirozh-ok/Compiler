@@ -60,7 +60,6 @@ namespace Compiler
             this.tsHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.tsCallingHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.tsAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.tbResult = new System.Windows.Forms.TextBox();
             this.bNew = new System.Windows.Forms.Button();
             this.bOpen = new System.Windows.Forms.Button();
             this.bSave = new System.Windows.Forms.Button();
@@ -69,10 +68,16 @@ namespace Compiler
             this.bLeft = new System.Windows.Forms.Button();
             this.bPaste = new System.Windows.Forms.Button();
             this.bCopy = new System.Windows.Forms.Button();
-            this.tbCode = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.spliter = new System.Windows.Forms.SplitContainer();
+            this.tbCode = new System.Windows.Forms.RichTextBox();
+            this.tbResult = new System.Windows.Forms.RichTextBox();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.spliter)).BeginInit();
+            this.spliter.Panel1.SuspendLayout();
+            this.spliter.Panel2.SuspendLayout();
+            this.spliter.SuspendLayout();
             this.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -297,47 +302,38 @@ namespace Compiler
             this.tsAbout.Text = "О программе";
             this.tsAbout.Click += new System.EventHandler(this.tsAbout_Click);
             // 
-            // tbResult
-            // 
-            this.tbResult.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbResult.Location = new System.Drawing.Point(12, 407);
-            this.tbResult.Multiline = true;
-            this.tbResult.Name = "tbResult";
-            this.tbResult.ReadOnly = true;
-            this.tbResult.Size = new System.Drawing.Size(776, 147);
-            this.tbResult.TabIndex = 3;
-            this.tbResult.Visible = false;
-            // 
             // bNew
             // 
+            this.bNew.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.bNew.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bNew.BackgroundImage")));
             this.bNew.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.bNew.Location = new System.Drawing.Point(27, 31);
             this.bNew.Name = "bNew";
-            this.bNew.Size = new System.Drawing.Size(48, 43);
+            this.bNew.Size = new System.Drawing.Size(50, 50);
             this.bNew.TabIndex = 4;
             this.bNew.UseVisualStyleBackColor = true;
             this.bNew.Click += new System.EventHandler(this.bNew_Click);
             // 
             // bOpen
             // 
+            this.bOpen.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.bOpen.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bOpen.BackgroundImage")));
             this.bOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.bOpen.Location = new System.Drawing.Point(81, 31);
             this.bOpen.Name = "bOpen";
-            this.bOpen.Size = new System.Drawing.Size(48, 43);
+            this.bOpen.Size = new System.Drawing.Size(50, 50);
             this.bOpen.TabIndex = 5;
             this.bOpen.UseVisualStyleBackColor = true;
             this.bOpen.Click += new System.EventHandler(this.bOpen_Click);
             // 
             // bSave
             // 
+            this.bSave.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.bSave.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bSave.BackgroundImage")));
             this.bSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.bSave.Location = new System.Drawing.Point(135, 31);
             this.bSave.Name = "bSave";
-            this.bSave.Size = new System.Drawing.Size(48, 43);
+            this.bSave.Size = new System.Drawing.Size(50, 50);
             this.bSave.TabIndex = 7;
             this.bSave.UseVisualStyleBackColor = true;
             this.bSave.Click += new System.EventHandler(this.bSave_Click);
@@ -349,7 +345,7 @@ namespace Compiler
             this.bCut.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.bCut.Location = new System.Drawing.Point(450, 31);
             this.bCut.Name = "bCut";
-            this.bCut.Size = new System.Drawing.Size(48, 43);
+            this.bCut.Size = new System.Drawing.Size(50, 50);
             this.bCut.TabIndex = 8;
             this.bCut.UseVisualStyleBackColor = true;
             this.bCut.Click += new System.EventHandler(this.bCut_Click);
@@ -361,7 +357,7 @@ namespace Compiler
             this.bRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.bRight.Location = new System.Drawing.Point(324, 31);
             this.bRight.Name = "bRight";
-            this.bRight.Size = new System.Drawing.Size(48, 43);
+            this.bRight.Size = new System.Drawing.Size(50, 50);
             this.bRight.TabIndex = 9;
             this.bRight.UseVisualStyleBackColor = true;
             this.bRight.Click += new System.EventHandler(this.bRight_Click);
@@ -372,8 +368,9 @@ namespace Compiler
             this.bLeft.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bLeft.BackgroundImage")));
             this.bLeft.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.bLeft.Location = new System.Drawing.Point(260, 31);
+            this.bLeft.MinimumSize = new System.Drawing.Size(50, 50);
             this.bLeft.Name = "bLeft";
-            this.bLeft.Size = new System.Drawing.Size(48, 43);
+            this.bLeft.Size = new System.Drawing.Size(50, 50);
             this.bLeft.TabIndex = 10;
             this.bLeft.UseVisualStyleBackColor = true;
             this.bLeft.Click += new System.EventHandler(this.bLeft_Click);
@@ -385,7 +382,7 @@ namespace Compiler
             this.bPaste.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.bPaste.Location = new System.Drawing.Point(513, 31);
             this.bPaste.Name = "bPaste";
-            this.bPaste.Size = new System.Drawing.Size(48, 43);
+            this.bPaste.Size = new System.Drawing.Size(50, 50);
             this.bPaste.TabIndex = 11;
             this.bPaste.UseVisualStyleBackColor = true;
             this.bPaste.Click += new System.EventHandler(this.bPaste_Click);
@@ -397,30 +394,15 @@ namespace Compiler
             this.bCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.bCopy.Location = new System.Drawing.Point(387, 31);
             this.bCopy.Name = "bCopy";
-            this.bCopy.Size = new System.Drawing.Size(48, 43);
+            this.bCopy.Size = new System.Drawing.Size(50, 50);
             this.bCopy.TabIndex = 12;
             this.bCopy.UseVisualStyleBackColor = true;
             this.bCopy.Click += new System.EventHandler(this.bCopy_Click);
             // 
-            // tbCode
-            // 
-            this.tbCode.AcceptsTab = true;
-            this.tbCode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbCode.Font = new System.Drawing.Font("Consolas", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbCode.Location = new System.Drawing.Point(12, 103);
-            this.tbCode.Name = "tbCode";
-            this.tbCode.Size = new System.Drawing.Size(776, 275);
-            this.tbCode.TabIndex = 13;
-            this.tbCode.Text = "";
-            this.tbCode.Visible = false;
-            this.tbCode.TextChanged += new System.EventHandler(this.tbCode_TextChanged);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 80);
+            this.label1.Location = new System.Drawing.Point(24, 85);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(33, 17);
             this.label1.TabIndex = 14;
@@ -431,12 +413,60 @@ namespace Compiler
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 381);
+            this.label2.Location = new System.Drawing.Point(10, 3);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(160, 17);
             this.label2.TabIndex = 15;
             this.label2.Text = "Результат компиляции";
             this.label2.Visible = false;
+            // 
+            // spliter
+            // 
+            this.spliter.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.spliter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.spliter.Location = new System.Drawing.Point(12, 105);
+            this.spliter.Name = "spliter";
+            this.spliter.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // spliter.Panel1
+            // 
+            this.spliter.Panel1.Controls.Add(this.tbCode);
+            // 
+            // spliter.Panel2
+            // 
+            this.spliter.Panel2.Controls.Add(this.tbResult);
+            this.spliter.Panel2.Controls.Add(this.label2);
+            this.spliter.Size = new System.Drawing.Size(776, 458);
+            this.spliter.SplitterDistance = 293;
+            this.spliter.TabIndex = 16;
+            this.spliter.Visible = false;
+            // 
+            // tbCode
+            // 
+            this.tbCode.AcceptsTab = true;
+            this.tbCode.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbCode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbCode.Font = new System.Drawing.Font("Consolas", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbCode.Location = new System.Drawing.Point(0, 0);
+            this.tbCode.Name = "tbCode";
+            this.tbCode.Size = new System.Drawing.Size(774, 291);
+            this.tbCode.TabIndex = 17;
+            this.tbCode.Text = "";
+            this.tbCode.Visible = false;
+            this.tbCode.TextChanged += new System.EventHandler(this.tbCode_TextChanged);
+            // 
+            // tbResult
+            // 
+            this.tbResult.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbResult.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbResult.Location = new System.Drawing.Point(0, 0);
+            this.tbResult.Name = "tbResult";
+            this.tbResult.Size = new System.Drawing.Size(774, 159);
+            this.tbResult.TabIndex = 16;
+            this.tbResult.Text = "";
+            this.tbResult.Visible = false;
             // 
             // MainForm
             // 
@@ -444,9 +474,8 @@ namespace Compiler
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 566);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.tbCode);
+            this.Controls.Add(this.spliter);
             this.Controls.Add(this.bCopy);
             this.Controls.Add(this.bPaste);
             this.Controls.Add(this.bLeft);
@@ -455,10 +484,9 @@ namespace Compiler
             this.Controls.Add(this.bSave);
             this.Controls.Add(this.bOpen);
             this.Controls.Add(this.bNew);
-            this.Controls.Add(this.tbResult);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(650, 500);
+            this.MinimumSize = new System.Drawing.Size(750, 500);
             this.Name = "MainForm";
             this.Text = "Compiler";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
@@ -467,6 +495,11 @@ namespace Compiler
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.spliter.Panel1.ResumeLayout(false);
+            this.spliter.Panel2.ResumeLayout(false);
+            this.spliter.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.spliter)).EndInit();
+            this.spliter.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -481,7 +514,6 @@ namespace Compiler
         private System.Windows.Forms.ToolStripMenuItem tsText;
         private System.Windows.Forms.ToolStripMenuItem tsStart;
         private System.Windows.Forms.ToolStripMenuItem tsHelp;
-        private System.Windows.Forms.TextBox tbResult;
         private System.Windows.Forms.ToolStripMenuItem tsCreate;
         private System.Windows.Forms.ToolStripMenuItem tsOpen;
         private System.Windows.Forms.ToolStripMenuItem tsSave;
@@ -512,9 +544,11 @@ namespace Compiler
         private System.Windows.Forms.Button bLeft;
         private System.Windows.Forms.Button bPaste;
         private System.Windows.Forms.Button bCopy;
-        private System.Windows.Forms.RichTextBox tbCode;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.SplitContainer spliter;
+        private System.Windows.Forms.RichTextBox tbCode;
+        private System.Windows.Forms.RichTextBox tbResult;
     }
 }
 

@@ -57,6 +57,7 @@ namespace Compiler
             {Color.Green, new List<string>()
             {
                 "Programm",
+                "Console",
                 "String",
                 "Int",
                 "Double",
@@ -90,19 +91,25 @@ namespace Compiler
             }
         }
 
-        public static void func(RichTextBox tbCode,string inputCommand)
+        public static void AddColor(RichTextBox tbCode,string inputCommand, int mousePos, int startPos, int endPos)
         {
             foreach (var current in dictColorComands)
             {
                 if (current.Value.FirstOrDefault(x => x == inputCommand) != null)
                 {
-                    tbCode.Select(tbCode.Text.IndexOf(inputCommand), inputCommand.Length);
+                    tbCode.Select(startPos, endPos);
                     tbCode.SelectionColor = current.Key;
+                    tbCode.SelectionLength = 0;
+                    tbCode.SelectionStart = mousePos;           
+                    tbCode.SelectionColor = defaultColor;
                     return;
                 }
             }
-            tbCode.Select(tbCode.Text.IndexOf(inputCommand), inputCommand.Length);
+            tbCode.Select(startPos, endPos);
             tbCode.SelectionColor = defaultColor;
+            tbCode.SelectionLength = 0;
+            tbCode.SelectionStart = mousePos;
+
         }
     }
 }
