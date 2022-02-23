@@ -292,13 +292,14 @@ namespace Compiler
             // tsCallingHelp
             // 
             this.tsCallingHelp.Name = "tsCallingHelp";
-            this.tsCallingHelp.Size = new System.Drawing.Size(197, 26);
+            this.tsCallingHelp.Size = new System.Drawing.Size(224, 26);
             this.tsCallingHelp.Text = "Вызов справки";
+            this.tsCallingHelp.Click += new System.EventHandler(this.tsCallingHelp_Click);
             // 
             // tsAbout
             // 
             this.tsAbout.Name = "tsAbout";
-            this.tsAbout.Size = new System.Drawing.Size(197, 26);
+            this.tsAbout.Size = new System.Drawing.Size(224, 26);
             this.tsAbout.Text = "О программе";
             this.tsAbout.Click += new System.EventHandler(this.tsAbout_Click);
             // 

@@ -9,14 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+/*Возможные будущие изменения*/
+//доделать подсветку синтаксиса
 //нумерация строк
 // индикатор сохранённости 
-// написать справку и о программе
 //по щелчку на ошибку, указывать строку в коде
 //изменение во время работы программы размера области кода и результатов
 //при изменении кода, файл становится не сохранённым (флаг) - поправаить при созданнии/открытии файла isSave = true;
-// System.ComponentModel.Win32Exception: "Ошибка при создании дескриптора окна."
-// изменять цвет команд во время их ввода (динамически)
+// System.ComponentModel.Win32Exception: "Ошибка при создании дескриптора окна.
 
 namespace Compiler
 { 
@@ -137,7 +137,7 @@ namespace Compiler
             tbResult.Visible = true;
             spliter.Visible = true; 
             this.Text = "Compiler (" + currentOpenFile + ")";
-            TextColors.AddColor(ref tbCode); 
+            //TextColors.AddColor(ref tbCode); 
         }
         private void bOpen_Click(object sender, EventArgs e)
         {
@@ -234,7 +234,7 @@ namespace Compiler
         private void tsSaveAs_Click(object sender, EventArgs e)
         {
             SaveFileDialog SaveFileDialog = new SaveFileDialog();
-            SaveFileDialog.Title = "Savw a file";
+            SaveFileDialog.Title = "Save a file";
             SaveFileDialog.Filter = "CSharpFile|*.cs";
             var pressBut = SaveFileDialog.ShowDialog();
 
@@ -246,17 +246,24 @@ namespace Compiler
         {
             try
             {
-                MessageBox.Show(Application.StartupPath);
-                Process.Start(Application.StartupPath + @"\aboutProg.txt");
+                Process.Start(Application.StartupPath + @"\aboutProg.html");
             }
             catch
-            { }
+            {
+                MessageBox.Show("Не удалось найти файл содержащий сведения о программе!");
+            }
         }
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.S && e.Control)
                 SaveInFile(); 
+
+            if (e.KeyCode == Keys.O && e.Control)
+                OpenFile();
+
+            if (e.KeyCode == Keys.N && e.Control)
+                CreateFile();
         }
 
         private void MainForm_DragEnter(object sender, DragEventArgs e)
@@ -288,7 +295,8 @@ namespace Compiler
         }
         private void tbCode_TextChanged(object sender, EventArgs e)
         {
-            int mousePos = tbCode.SelectionStart; 
+            //динамическая подсветка синтаксиса
+           /* int mousePos = tbCode.SelectionStart; 
 
             if (tbCode.Text != string.Empty)
             {
@@ -309,6 +317,19 @@ namespace Compiler
                 // ищем слово в словаре и если есть, окрашиваем
                 if(!string.IsNullOrEmpty(currentWord))
                     TextColors.AddColor(tbCode, currentWord, mousePos, i+1, j-1);
+            }*/
+        }
+
+        private void tsCallingHelp_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                Process.Start(Application.StartupPath + @"\Help.txt");
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось найти файл содержащий справку!");
             }
         }
     }

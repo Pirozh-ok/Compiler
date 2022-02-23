@@ -101,7 +101,7 @@ namespace Compiler
                     tbCode.SelectionColor = current.Key;
                     tbCode.SelectionLength = 0;
                     tbCode.SelectionStart = mousePos;           
-                    tbCode.SelectionColor = defaultColor;
+                    tbCode.SelectionColor = defaultColor; 
                     return;
                 }
             }
