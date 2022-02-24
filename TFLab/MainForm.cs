@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+
+//сохранение
+//справка в пдф
 
 /*Возможные будущие изменения*/
 //доделать подсветку синтаксиса
@@ -19,7 +16,7 @@ using System.Windows.Forms;
 // System.ComponentModel.Win32Exception: "Ошибка при создании дескриптора окна.
 
 namespace Compiler
-{ 
+{
     public partial class MainForm : Form
     {
         ToolTip[] tips = new ToolTip[8];
@@ -96,8 +93,9 @@ namespace Compiler
                 // если текущий документ не сохранён, то сохраняем
                 if (currentOpenFile != string.Empty)
                 {
-                    if (MessageBox.Show("У вас есть несохранённые изменения в открытом документе. \nСохранить изменения?", "Сохранить файл?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                        SaveInFile();
+                    if(!isSave)
+                        if (MessageBox.Show("У вас есть несохранённые изменения в открытом документе. \nСохранить изменения?", "Сохранить файл?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                            SaveInFile();
                     tbCode.Text = String.Empty;
                     tbResult.Text = String.Empty;
                 }
@@ -116,7 +114,14 @@ namespace Compiler
         }
         void OpenFile()
         {
-            OpenFileDialog OFD = new OpenFileDialog();
+            if (currentOpenFile != string.Empty)
+            {
+                if (!isSave)
+                    if (MessageBox.Show("У вас есть несохранённые изменения в открытом документе. \nСохранить изменения?", "Сохранить файл?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        SaveInFile();
+            }
+
+                OpenFileDialog OFD = new OpenFileDialog();
             OFD.Title = "Open a file";
             OFD.Filter = "CharpFile|*.cs";
 
@@ -128,7 +133,7 @@ namespace Compiler
         void SettingOpen(string nameFile)
         {
             SaveInFile();
-            isSave = false;
+            isSave = true;
             currentOpenFile = nameFile;
             tbCode.Text = File.ReadAllText(currentOpenFile);
             label1.Visible = true;
@@ -239,7 +244,10 @@ namespace Compiler
             var pressBut = SaveFileDialog.ShowDialog();
 
             if (pressBut == DialogResult.OK)
+            {
                 File.WriteAllText(SaveFileDialog.FileName, tbCode.Text);
+                isSave = true; 
+            }
         }
 
         private void tsAbout_Click(object sender, EventArgs e)
@@ -295,6 +303,7 @@ namespace Compiler
         }
         private void tbCode_TextChanged(object sender, EventArgs e)
         {
+            isSave = false;
             //динамическая подсветка синтаксиса
            /* int mousePos = tbCode.SelectionStart; 
 
