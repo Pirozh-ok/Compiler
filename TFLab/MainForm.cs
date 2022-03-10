@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using TFLab;
 
 //сохранение
 //справка в пдф
@@ -121,7 +122,7 @@ namespace Compiler
                         SaveInFile();
             }
 
-                OpenFileDialog OFD = new OpenFileDialog();
+            OpenFileDialog OFD = new OpenFileDialog();
             OFD.Title = "Open a file";
             OFD.Filter = "CharpFile|*.cs";
 
@@ -133,9 +134,9 @@ namespace Compiler
         void SettingOpen(string nameFile)
         {
             SaveInFile();
-            isSave = true;
             currentOpenFile = nameFile;
             tbCode.Text = File.ReadAllText(currentOpenFile);
+            isSave = true;
             label1.Visible = true;
             tbCode.Visible = true;
             label2.Visible = true;
@@ -240,7 +241,7 @@ namespace Compiler
         {
             SaveFileDialog SaveFileDialog = new SaveFileDialog();
             SaveFileDialog.Title = "Save a file";
-            SaveFileDialog.Filter = "CSharpFile|*.cs";
+            SaveFileDialog.Filter = "CSharpFile|*.cs"; 
             var pressBut = SaveFileDialog.ShowDialog();
 
             if (pressBut == DialogResult.OK)
@@ -340,6 +341,12 @@ namespace Compiler
             {
                 MessageBox.Show("Не удалось найти файл содержащий справку!");
             }
+        }
+
+        private void tsStart_Click(object sender, EventArgs e)
+        {
+            if(currentOpenFile != null)
+            tbResult.Text =  LexicalAnalyzer.TextAnalysis(tbCode.Text);
         }
     }
 }
