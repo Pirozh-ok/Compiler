@@ -255,7 +255,7 @@ namespace Compiler
         {
             try
             {
-                Process.Start(Application.StartupPath + @"\aboutProg.html");
+                Process.Start(@"..\..\help\aboutProg.html");
             }
             catch
             {
@@ -335,7 +335,7 @@ namespace Compiler
 
             try
             {
-                Process.Start(Application.StartupPath + @"\Help.txt");
+                Process.Start(@"..\..\help\help.html");
             }
             catch
             {
@@ -346,7 +346,7 @@ namespace Compiler
         private void tsStart_Click(object sender, EventArgs e)
         {
             if(currentOpenFile != null)
-            tbResult.Text =  LexicalAnalyzer.TextAnalysis(tbCode.Text);
+            tbResult.Text =  LexicalAnalyzer.Analysis(tbCode.Text);
         }
     }
 }

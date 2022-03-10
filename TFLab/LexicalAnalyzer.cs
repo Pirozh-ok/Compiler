@@ -8,6 +8,7 @@ namespace TFLab
 {
     static class LexicalAnalyzer
     {
+        static private List<string> keyWords = new List<string>() {"int"};
         static private Dictionary<string, string> codes = new Dictionary<string, string>()
         {
             {"ключевое слово","1"},
@@ -22,21 +23,19 @@ namespace TFLab
             {"присваивание с суммой","10"},
             {"присваивание с вычитанием","11"},
             {"комментарий","11"},
-            {"скобки","12"}
+            {"открывающая круглая скобка","12"},
+            {"закрывающая круглая скобка","12"},
+            {"недопустимый символ","-1" }
         };
-        public static string TextAnalysis(string text)
-        {
-            return AnalysisStr(text);
-        }
 
         private static string FormatString(string codeWord, string word, int indexStart)
         {
-            return codes[codeWord] + " - " + codeWord + " - \"" + word + "\" c " + indexStart.ToString() + " по " + (indexStart + word.Length).ToString() + " символы\r\n";
+            return codes[codeWord] + " - " + codeWord + " - \"" + word + "\" c " + indexStart.ToString() + " по " + (indexStart + word.Length-1).ToString() + " символы\r\n";
         }
-        private static string AnalysisStr(string str)
+        public static string Analysis(string str)
         {
             var result = string.Empty;
-            int i = 0, indStart = 0; 
+            int i = 0, indStart = 0;
             while (i < str.Length)
             {
                 if (char.IsLetter(str[i]))
@@ -48,8 +47,8 @@ namespace TFLab
                         word += str[i];
                         i++;
                     }
-
-                    if (word == "int") result += FormatString("ключевое слово", word, indStart);
+                    i = i - 1;
+                    if (keyWords.FirstOrDefault(x => x == word) != null) result += FormatString("ключевое слово", word, indStart);
                     else result += FormatString("идентификатор", word, indStart);
                 }
 
@@ -62,9 +61,12 @@ namespace TFLab
                         word += str[i];
                         i++;
                     }
-
+                    i = i - 1;
                     result += FormatString("целое без знака", word, indStart);
                 }
+
+                else if (i < str.Length && str[i] == '\n')
+                    result += FormatString("конец строки", "\\n", i);
 
                 else if (i < str.Length && str[i] == ' ')
                     result += FormatString("пробел", " ", i);
@@ -99,10 +101,34 @@ namespace TFLab
                 else if (i < str.Length && str[i] == '-' && str[i + 1] == '=')
                 {
                     result += FormatString("присваивание с вычитанием", "-=", i);
-                    i++; 
+                    i++;
                 }
 
-                i++; 
+                else if (i < str.Length && str[i] == '(')
+                    result += FormatString("открывающая круглая скобка", "(", i);
+
+                else if (i < str.Length && str[i] == ')')
+                    result += FormatString("закрывающая круглая скобка", ")", i);
+
+                else if (i < str.Length - 1 && str[i] == '/' && str[i + 1] == '*')
+                {
+                    int index = str.IndexOf("*/", i);
+                    if (index == -1)
+                        result += FormatString("недопустимый символ", str[i].ToString(), i);
+                    else
+                    {
+                        indStart = i;
+                        string comment = str.Substring(indStart, index+2-indStart);
+                        i += index + 2 - indStart;
+                        result += FormatString("комментарий", comment, indStart);
+                    }
+
+                }
+
+                else if (i < str.Length)
+                    result += FormatString("недопустимый символ", str[i].ToString(), i);
+
+                i++;
             }
 
             return result; 
