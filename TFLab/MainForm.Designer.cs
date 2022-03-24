@@ -465,6 +465,7 @@ namespace Compiler
             this.tbResult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbResult.Location = new System.Drawing.Point(0, 0);
             this.tbResult.Name = "tbResult";
+            this.tbResult.ReadOnly = true;
             this.tbResult.Size = new System.Drawing.Size(774, 159);
             this.tbResult.TabIndex = 16;
             this.tbResult.Text = "";

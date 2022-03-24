@@ -345,8 +345,8 @@ namespace Compiler
 
         private void tsStart_Click(object sender, EventArgs e)
         {
-            if(currentOpenFile != null)
-            tbResult.Text =  LexicalAnalyzer.Analysis(tbCode.Text);
+            if (currentOpenFile != null)
+                tbResult.Text = UseStateMachine.StartAnalize(tbCode.Text.Split('\n'));//LexicalAnalyzer.Analysis(tbCode.Text);
         }
     }
 }
