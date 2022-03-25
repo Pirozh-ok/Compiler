@@ -335,7 +335,7 @@ namespace Compiler
 
             try
             {
-                Process.Start(@"..\..\help\help.html");
+                Process.Start(@"..\..\help\helpStateMachine.html");
             }
             catch
             {

@@ -1,0 +1,56 @@
+.body {
+    font-family: "Times New Roman";
+    color: black;
+}
+
+.headLab {
+    font-size: 30px;
+    font-style: unset;
+}
+
+.task__head {
+    font-size: 20px;
+    line-height: normal;
+}
+
+.task__head1 {
+    margin-left: 20px;
+}
+
+.task__head2 {
+    margin: 10px 10px 10px 0px;
+    font-size: 25px;
+    font-weight: bolder;
+}
+
+.images {
+    text-align: center;
+    width: 60%;
+    border: 2px solid #000;
+}
+
+li {
+    list-style-type: none;
+}
+
+ul {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.lists {
+    display: flex;
+}
+
+.list1 {
+    width: 30%;
+}
+
+.list2 {
+    width: 30%;
+}
+
+.table {
+    text-align: center;
+    width: 60%;
+}
