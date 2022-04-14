@@ -11,19 +11,16 @@ namespace TFLab
     {
         static List<StateMachine> _listState = new List<StateMachine>()
         {
-            new StateMachine(0, false, new List<Transition>{new Transition(1, 'a')}),
-            new StateMachine(1, false, new List<Transition>{new Transition(2, 'c'), new Transition(3, 'd')}),
-            new StateMachine(2, false, new List<Transition>{new Transition(4, 'e'), new Transition(5, 'f')}),
-            new StateMachine(3, false, new List<Transition>{new Transition(1, 'k'), new Transition (7, 'n')}),
-            new StateMachine(4, false, new List<Transition>{new Transition(1, 'i'), new Transition(6, 'g')}),
-            new StateMachine(5, false, new List<Transition>{new Transition(1, 'i'), new Transition(6, 'g')}),
-            new StateMachine(6, false, new List<Transition>{new Transition(7, 'n')}),
-            new StateMachine(7, false, new List<Transition>{new Transition(8, 'm')}),
-            new StateMachine(8, false, new List<Transition>{new Transition(9, 'l')}),
-            new StateMachine(9, true, new List<Transition>{})
+            new StateMachine('I', false, new List<Transition>{new Transition('D', '('), new Transition('B','/')}),
+            new StateMachine('B', false, new List<Transition>{new Transition('C', '/')}),
+            new StateMachine('C', false, new List<Transition>{new Transition('C', 's'), new Transition('K', '\n')}),
+            new StateMachine('D', false, new List<Transition>{new Transition('F', '*')}),
+            new StateMachine('F', false, new List<Transition>{new Transition('F', 's'), new Transition('G', '*'), new Transition('F', '\n')}),
+            new StateMachine('G', false, new List<Transition>{new Transition('K',')')}),
+            new StateMachine('K', true, null),
         };
-
-        static Dictionary<char, string> _descriptionState = new Dictionary<char, string>()
+        /**/ // 
+        /*static Dictionary<char, string> _descriptionState = new Dictionary<char, string>()
         {
             {'a', "переход в состояние 1 - поставить бутыку" },
             {'c', "переход в состояние 2 - выбран способ оплаты наличными" },
@@ -36,38 +33,54 @@ namespace TFLab
             {'n', "переход в состояние 7 - оплата прошла успешно" },
             {'m', "переход в состояние 8 - налить молоко" },
             {'l', "переход в состояние 9 - забрать молоко" }
-        };
-        static public string StartAnalize(string[] strings)
+        };*/
+        static public string StartAnalize(string text)
         {
-            const int startState = 0;
+            int countError = 0; 
+            const char startState = 'I';
+            char currentState = startState; 
             string result = string.Empty;
+            int indexLastEndState = -1;
+            int i = 0;
+            while (i < text.Length)
+            {
+                //если считанный символ это буква или цифра, то переход обозначаем s, для петли в комментарии
+                var transition = (Char.IsLetter(text[i]) || Char.IsDigit(text[i]) || (text[i] == ' ')) ? 's' : text[i];
 
-           // рассматриваем каждую строку из ввода пользователя
-            for(int j = 0; j < strings.Count(); j++)
-            { 
-                // начальное состояние всегда 0
-                int currentState = startState;
-                result += $"Анализ {j + 1} строки:\n";
-                //анализируем каждый входящий символ, на наличие таких выходов из текущего состояния
-                for (int i = 0; i < strings[j].Length; i++)
+                //если считаный символ буква и это последний символ в строке, то это конечное состояние
+                if ((transition == 's' || Char.IsDigit(text[i])) && i + 1 == text.Length)
+                    transition = '\n';
+
+                var nextState = _listState.FirstOrDefault(x => x.State == currentState).Transitions.FirstOrDefault(x => x.transition == transition);
+
+                //если нет перехода по считанному символу, значит это ошибочный символ
+                if (nextState == null)
                 {
-                    var nextState = _listState.FirstOrDefault(x => x.State == currentState).Transitions.FirstOrDefault(x=>x.transition == strings[j][i]);
-                    
-                    if (nextState != null)
-                    { 
-                        currentState = nextState.state;
-                        result += _descriptionState[nextState.transition] + '\n';
-                    }
-                    else 
-                        return "ошибка в строке номер " + (j + 1).ToString() + " - нет перехода или неизвестный символ '" + strings[j][i] + "'"; 
+                    result += $"Имя \"{text[i]}\" не существует в текущем контексте\n";
+                    countError++;
+                    currentState = startState;
                 }
-                // проверяем, является ли последнее состояние в которое перешли конечным. если нет, то цепочка переходов неполная и это ошибка
-                if(!_listState.FirstOrDefault(x => x.State == currentState).IsEnd)
-                    return "ошибка в строке номер " + (j + 1).ToString() + " - строка не пришла в конечное состояние";
-
-                result += "\n";
+                //если такой переход есть, переходим в след состояние
+                else
+                {
+                    currentState = nextState.state;
+                    //если след состояние оказалось последним, переходим в начальное состояние, только если это не конец кода
+                    if(_listState.FirstOrDefault(x => x.State == currentState).IsEnd && (i + 1 < text.Length))
+                    {
+                        currentState = startState;
+                        indexLastEndState = i;
+                    }
+                }
+                i++;
             }
-            return result;
+            //если последнее состояние не было конечным, добавляем ошибку последнюю конструкцию
+            if(!_listState.FirstOrDefault(x => x.State == currentState).IsEnd)
+            {
+                result += $"Неверный синтаксис: " + text.Substring(indexLastEndState+1,text.Length-indexLastEndState-1);
+                countError++;
+            }
+ 
+            return $"Количество ошибок: {countError}\n" + result;
         }
     }
 }

@@ -251,6 +251,13 @@ namespace Compiler
             }
         }
 
+        private void OpenMicrosoftWord()
+        { 
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = "WINWORD.EXE";
+            startInfo.Arguments = @"C:\Users\ivan-\source\repos\TFLab\TFLab\help\help.docx";
+            Process.Start(startInfo);
+        }
         private void tsAbout_Click(object sender, EventArgs e)
         {
             try
@@ -335,7 +342,8 @@ namespace Compiler
 
             try
             {
-                Process.Start(@"..\..\help\helpStateMachine.html");
+                //Process.Start(@"..\..\help\helpStateMachine.html");
+                OpenMicrosoftWord();
             }
             catch
             {
@@ -346,7 +354,7 @@ namespace Compiler
         private void tsStart_Click(object sender, EventArgs e)
         {
             if (currentOpenFile != null)
-                tbResult.Text = UseStateMachine.StartAnalize(tbCode.Text.Split('\n'));//LexicalAnalyzer.Analysis(tbCode.Text);
+                tbResult.Text = UseStateMachine.StartAnalize(tbCode.Text);
         }
     }
 }
