@@ -354,7 +354,12 @@ namespace Compiler
         private void tsStart_Click(object sender, EventArgs e)
         {
             if (currentOpenFile != null)
-                tbResult.Text = UseStateMachine.StartAnalize(tbCode.Text);
+            {
+                var resLexicalAnalyzer = LexicalAnalyzer.Analysis(tbCode.Text.Split('\n'));
+                var errors = UseStateMachine.StartAnalize(resLexicalAnalyzer.Item1, resLexicalAnalyzer.Item2);
+                tbResult.Text = ($"Количество ошибок {errors.Count}:\n{string.Join("\n", errors.ToArray())}");
+               
+            }
         }
     }
 }

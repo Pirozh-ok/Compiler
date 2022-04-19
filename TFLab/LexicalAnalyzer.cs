@@ -8,38 +8,25 @@ namespace TFLab
 {
     static class LexicalAnalyzer
     {
-        static private List<string> keyWords = new List<string>() {"int"};
-        static private Dictionary<string, string> codes = new Dictionary<string, string>()
+        static private List<(char, int)> lexems = new List<(char, int)>();
+        static private List<string> errors = new List<string>();
+        public static (List<(char, int)>, List<string>) Analysis(string[] str)
         {
-            {"ключевое слово","1"},
-            {"целое без знака","2"},
-            {"идентификатор","3"},
-            {"пробел","4"},
-            {"конец оператора","5"},
-            {"конец строки","6"},
-            {"присваивание","7"},
-            {"присваивание с умножением","8"},
-            {"присваивание с делением","9"},
-            {"присваивание с суммой","10"},
-            {"присваивание с вычитанием","11"},
-            {"комментарий","11"},
-            {"открывающая круглая скобка","12"},
-            {"закрывающая круглая скобка","12"},
-            {"недопустимый символ","-1" }
-        };
-
-        private static string FormatString(string codeWord, string word, int indexStart)
-        {
-            return codes[codeWord] + " - " + codeWord + " - \"" + word + "\" c " + indexStart.ToString() + " по " + (indexStart + word.Length-1).ToString() + " символы\r\n";
-        }
-        public static string Analysis(string str)
-        {
-            int i = 0;
-            while(i < str.Length)
+            lexems.Clear();
+            errors.Clear();
+            for (int j = 0; j < str.Count(); j++)
             {
-                if (str[i] == '/') ;
+                int i = 0;
+                if (j != str.Count() - 1) str[j] += '\n';
+                while (i < str[j].Length)
+                {
+                    if (str[j][i] == '(' || str[j][i] == '*' || str[j][i] == ')' || Char.IsDigit(str[j][i]) || Char.IsLetter(str[j][i]) || str[j][i] == '/' || str[j][i] == '\n')
+                        lexems.Add((str[j][i], j + 1));
+                    else errors.Add($"Строка {j + 1}: неизвестный символ \"{str[j][i]}\"");
+                    i++;
+                }
             }
-            return "";
+            return (lexems, errors);
         }
     }
 }
