@@ -23,63 +23,50 @@ namespace TFLab
         static public List<string> StartAnalize(List<(char, int)> lexems, List<string> errors)
         {
             const char startState = 'I';
-            char currentState = startState; 
+            char currentState = startState;
+            char previousState = startState; 
             string result = string.Empty;
-            int indexLastEndState = -1;
-            bool isStringComment = false;
             bool isMultiStringComment = false;
             int i = 0;
             while (i < lexems.Count())
             {
                 //если считанный символ это буква или цифра, то переход обозначаем s, для петли в комментарии
                 var transition = (Char.IsLetter(lexems[i].Item1) || Char.IsDigit(lexems[i].Item1) || (lexems[i].Item1 == ' ')) ? 's' : lexems[i].Item1;
+
                 //определяем следующее состояние 
                 var nextState = _listState.FirstOrDefault(x => x.State == currentState).Transitions.FirstOrDefault(x => x.transition == transition);
 
                 //если нет перехода по считанному символу, значит неверная последовательность
                 if (nextState == null)
                 {
-                    isStringComment = false;
-                    isMultiStringComment = false;
                     var errorSymbol = lexems[i].Item1 == '\n' ? "\\n" : lexems[i].Item1.ToString();
                     errors.Add($"Строка {lexems[i].Item2}: имя \"{errorSymbol}\" не существует в текущем контексте");
-                    currentState = startState;
+                    //возвращаемся в состояние до ошибки и продолжаем разбор
+                    currentState = previousState;
                 }
                 //если такой переход есть, переходим в след состояние
                 else
                 {
+                    //запоминаем предыдущее состояние, для нейтрализации в случае ошибки
+                    previousState = currentState;
                     currentState = nextState.state;
 
-                    //если в состоянии комментария, то устанавливаем флаг (для нейтрализации ошибок)
-                    if(currentState == 'C')
-                        isStringComment = true;
-
-                    //если в состоянии многострочного комментария, устанавливаем флаг (для нейтрализации ошибок)
-                    if(currentState == 'F')
-                        isMultiStringComment = true;
+                    //если многострочный комментарий, то устанавливаем флаг
+                    isMultiStringComment = currentState == 'F' ? true: false;
 
                     //если след состояние оказалось последним, переходим в начальное состояние, только если это не конец кода
                     if(_listState.FirstOrDefault(x => x.State == currentState).IsEnd && (i + 1 < lexems.Count()))
                     {
                         currentState = startState;
-                        indexLastEndState = i;
                     }
                 }
                 i++;
             }
-            /*//если последнее состояние не было конечным, добавляем ошибку последнюю конструкцию
-            if(!_listState.FirstOrDefault(x => x.State == currentState).IsEnd && !isStringComment)
-            {
-                result += $"Неверный синтаксис \"" + text.Substring(indexLastEndState+1,text.Length-indexLastEndState-1) + "\".";
-                countError++;
-            }
-            else if (!_listState.FirstOrDefault(x => x.State == currentState).IsEnd && !isStringComment && isMultiStringComment)
-            {
-                result += $"Неверный синтаксис \"" + text.Substring(indexLastEndState + 1, text.Length - indexLastEndState - 1) + "\". Пропущена лексема \"*)\"";
-                countError++;
-            }*/
-
-            return errors;/*$"Количество ошибок: {countError}\n" + result*/;
+            //если последнее состояние не было конечным, добавляем ошибку про не закрытый комментарий
+            if(!_listState.FirstOrDefault(x => x.State == currentState).IsEnd && isMultiStringComment)
+                errors.Add($"Строка {lexems[i-1].Item2}: обнаружен не закрытый комментарий, требуется \"*)\"");
+            
+            return errors;
         }
     }
 }

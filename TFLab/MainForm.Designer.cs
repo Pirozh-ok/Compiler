@@ -406,7 +406,7 @@ namespace Compiler
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(24, 85);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(33, 17);
+            this.label1.Size = new System.Drawing.Size(31, 16);
             this.label1.TabIndex = 14;
             this.label1.Text = "Код";
             this.label1.Visible = false;
@@ -417,7 +417,7 @@ namespace Compiler
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(10, 3);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(160, 17);
+            this.label2.Size = new System.Drawing.Size(159, 16);
             this.label2.TabIndex = 15;
             this.label2.Text = "Результат компиляции";
             this.label2.Visible = false;
@@ -450,7 +450,7 @@ namespace Compiler
             this.tbCode.AcceptsTab = true;
             this.tbCode.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbCode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbCode.Font = new System.Drawing.Font("Consolas", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbCode.Font = new System.Drawing.Font("Consolas", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tbCode.Location = new System.Drawing.Point(0, 0);
             this.tbCode.Name = "tbCode";
             this.tbCode.Size = new System.Drawing.Size(774, 291);
@@ -463,6 +463,7 @@ namespace Compiler
             // 
             this.tbResult.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbResult.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbResult.Font = new System.Drawing.Font("Consolas", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tbResult.Location = new System.Drawing.Point(0, 0);
             this.tbResult.Name = "tbResult";
             this.tbResult.ReadOnly = true;
