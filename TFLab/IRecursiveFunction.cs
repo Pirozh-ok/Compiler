@@ -20,10 +20,10 @@ namespace TFLab
         void Function();
         // Целая часть
         void WholePart();
-        // Дробная часть
-        void Fraction();
         // Цифра
         void Digit();
+        // Дробная часть
+        void Fraction();
         // Имя функции
         void NameFunction();
     }

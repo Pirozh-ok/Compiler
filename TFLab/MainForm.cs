@@ -33,7 +33,7 @@ namespace Compiler
         {
             InitializeComponent();
             initTips();
-            SettingOpen(fileName); 
+            SettingOpen(fileName);
         }
 
         void initTips()
@@ -59,27 +59,27 @@ namespace Compiler
         }
         private void bSave_Click(object sender, EventArgs e)
         {
-            SaveInFile(); 
+            SaveInFile();
         }
         private void bNew_Click(object sender, EventArgs e)
         {
-            CreateFile(); 
+            CreateFile();
         }
         private void tsCreate_Click(object sender, EventArgs e)
         {
-            CreateFile(); 
+            CreateFile();
         }
         private void tsOpen_Click(object sender, EventArgs e)
         {
-            OpenFile(); 
+            OpenFile();
         }
 
         void SaveInFile()
         {
             if (!isSave && currentOpenFile != string.Empty)
             {
-                File.WriteAllText(currentOpenFile, tbCode.Text); 
-                isSave = true; 
+                File.WriteAllText(currentOpenFile, tbCode.Text);
+                isSave = true;
             }
         }
         void CreateFile()
@@ -87,14 +87,14 @@ namespace Compiler
             SaveFileDialog CreateFileDialog = new SaveFileDialog();
             CreateFileDialog.Title = "Create a file";
             CreateFileDialog.Filter = "CSharpFile|*.cs";
-            var pressBut = CreateFileDialog.ShowDialog();           
+            var pressBut = CreateFileDialog.ShowDialog();
 
             if (pressBut == DialogResult.OK)
             {
                 // если текущий документ не сохранён, то сохраняем
                 if (currentOpenFile != string.Empty)
                 {
-                    if(!isSave)
+                    if (!isSave)
                         if (MessageBox.Show("У вас есть несохранённые изменения в открытом документе. \nСохранить изменения?", "Сохранить файл?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                             SaveInFile();
                     tbCode.Text = String.Empty;
@@ -109,9 +109,9 @@ namespace Compiler
                 label2.Visible = true;
                 tbCode.Visible = true;
                 tbResult.Visible = true;
-                spliter.Visible = true; 
+                spliter.Visible = true;
                 this.Text = "Compiler (" + currentOpenFile + ")";
-            }    
+            }
         }
         void OpenFile()
         {
@@ -128,7 +128,7 @@ namespace Compiler
 
             if (OFD.ShowDialog() == DialogResult.OK)
             {
-                SettingOpen(OFD.FileName); 
+                SettingOpen(OFD.FileName);
             }
         }
         void SettingOpen(string nameFile)
@@ -141,13 +141,13 @@ namespace Compiler
             tbCode.Visible = true;
             label2.Visible = true;
             tbResult.Visible = true;
-            spliter.Visible = true; 
+            spliter.Visible = true;
             this.Text = "Compiler (" + currentOpenFile + ")";
             //TextColors.AddColor(ref tbCode); 
         }
         private void bOpen_Click(object sender, EventArgs e)
         {
-            OpenFile(); 
+            OpenFile();
         }
 
         private void bLeft_Click(object sender, EventArgs e)
@@ -157,7 +157,7 @@ namespace Compiler
 
         private void bRight_Click(object sender, EventArgs e)
         {
-            tbCode.Redo(); 
+            tbCode.Redo();
         }
 
         private void tsСancel_Click(object sender, EventArgs e)
@@ -167,7 +167,7 @@ namespace Compiler
 
         private void tsRepeat_Click(object sender, EventArgs e)
         {
-            tbCode.Redo(); 
+            tbCode.Redo();
         }
 
         private void tsCut_Click(object sender, EventArgs e)
@@ -177,22 +177,22 @@ namespace Compiler
 
         private void tsCopy_Click(object sender, EventArgs e)
         {
-            tbCode.Copy(); 
+            tbCode.Copy();
         }
 
         private void tsPaste_Click(object sender, EventArgs e)
         {
-            tbCode.Paste(); 
+            tbCode.Paste();
         }
 
         private void tsDel_Click(object sender, EventArgs e)
         {
-            tbCode.Clear(); 
+            tbCode.Clear();
         }
 
         private void tsSelect_Click(object sender, EventArgs e)
         {
-            tbCode.SelectAll(); 
+            tbCode.SelectAll();
         }
 
         private void bCopy_Click(object sender, EventArgs e)
@@ -202,7 +202,7 @@ namespace Compiler
 
         private void bCut_Click(object sender, EventArgs e)
         {
-            tbCode.Cut(); 
+            tbCode.Cut();
         }
 
         private void bPaste_Click(object sender, EventArgs e)
@@ -212,12 +212,12 @@ namespace Compiler
 
         private void tsSave_Click(object sender, EventArgs e)
         {
-            SaveInFile(); 
+            SaveInFile();
         }
 
         private void tsExit_Click(object sender, EventArgs e)
         {
-            ExitProg(); 
+            ExitProg();
         }
 
         void ExitProg()
@@ -229,25 +229,25 @@ namespace Compiler
                         SaveInFile();
                 Environment.Exit(0);
             }
-            catch(System.ComponentModel.Win32Exception ex)
+            catch (System.ComponentModel.Win32Exception ex)
             { }
         }
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ExitProg(); 
+            ExitProg();
         }
 
         private void tsSaveAs_Click(object sender, EventArgs e)
         {
             SaveFileDialog SaveFileDialog = new SaveFileDialog();
             SaveFileDialog.Title = "Save a file";
-            SaveFileDialog.Filter = "CSharpFile|*.cs"; 
+            SaveFileDialog.Filter = "CSharpFile|*.cs";
             var pressBut = SaveFileDialog.ShowDialog();
 
             if (pressBut == DialogResult.OK)
             {
                 File.WriteAllText(SaveFileDialog.FileName, tbCode.Text);
-                isSave = true; 
+                isSave = true;
             }
         }
 
@@ -266,7 +266,7 @@ namespace Compiler
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.S && e.Control)
-                SaveInFile(); 
+                SaveInFile();
 
             if (e.KeyCode == Keys.O && e.Control)
                 OpenFile();
@@ -306,28 +306,28 @@ namespace Compiler
         {
             isSave = false;
             //динамическая подсветка синтаксиса
-           /* int mousePos = tbCode.SelectionStart; 
+            /* int mousePos = tbCode.SelectionStart; 
 
-            if (tbCode.Text != string.Empty)
-            {
-                string currentWord = string.Empty;
-                int j = tbCode.SelectionStart;
-                int i = j - 1; 
-                // выделяем слово в обе стороны
-                while (i >= 0 && char.IsLetter(tbCode.Text[i]))
-                {
-                    currentWord = currentWord.Insert(0, tbCode.Text[i].ToString());
-                    i--;
-                }
-                while (j < tbCode.Text.Length && char.IsLetter(tbCode.Text[j]))
-                {
-                    currentWord = currentWord.Insert(currentWord.Length, tbCode.Text[j].ToString());
-                    j++; 
-                }
-                // ищем слово в словаре и если есть, окрашиваем
-                if(!string.IsNullOrEmpty(currentWord))
-                    TextColors.AddColor(tbCode, currentWord, mousePos, i+1, j-1);
-            }*/
+             if (tbCode.Text != string.Empty)
+             {
+                 string currentWord = string.Empty;
+                 int j = tbCode.SelectionStart;
+                 int i = j - 1; 
+                 // выделяем слово в обе стороны
+                 while (i >= 0 && char.IsLetter(tbCode.Text[i]))
+                 {
+                     currentWord = currentWord.Insert(0, tbCode.Text[i].ToString());
+                     i--;
+                 }
+                 while (j < tbCode.Text.Length && char.IsLetter(tbCode.Text[j]))
+                 {
+                     currentWord = currentWord.Insert(currentWord.Length, tbCode.Text[j].ToString());
+                     j++; 
+                 }
+                 // ищем слово в словаре и если есть, окрашиваем
+                 if(!string.IsNullOrEmpty(currentWord))
+                     TextColors.AddColor(tbCode, currentWord, mousePos, i+1, j-1);
+             }*/
         }
 
         private void tsCallingHelp_Click(object sender, EventArgs e)
@@ -345,8 +345,12 @@ namespace Compiler
 
         private void tsStart_Click(object sender, EventArgs e)
         {
-            if (currentOpenFile != null)
-                tbResult.Text = UseStateMachine.StartAnalize(tbCode.Text.Split('\n'));//LexicalAnalyzer.Analysis(tbCode.Text);
+            if (currentOpenFile != null && tbCode.Text != "")
+            {
+                RecurciveAnalyzer ra = new RecurciveAnalyzer(tbCode.Text);
+                var result = ra.StartAnalyze();
+                tbResult.Text = $"Результат проверки введённой строки: {result.Item1}. Порядок разбора: Исходная строка {result.Item2}";//UseStateMachine.StartAnalize(tbCode.Text.Split('\n'));//LexicalAnalyzer.Analysis(tbCode.Text);
+            }
         }
     }
 }
