@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static TFLab.StateMachine;
 
 namespace TFLab
@@ -27,6 +25,7 @@ namespace TFLab
             string result = string.Empty;
             bool isMultiStringComment = false;
             int i = 0;
+            lexems.Add(('\n', lexems[lexems.Count() - 1].Item2));
             while (i < lexems.Count())
             {
                 //если считанный символ это буква или цифра, то переход обозначаем s, для петли в комментарии
@@ -39,7 +38,7 @@ namespace TFLab
                 if (nextState == null)
                 {
                     char expectedSymbol = _listState.FirstOrDefault(x => x.State == currentState).Transitions[0].transition;
-                    errors.Add($"Строка {lexems[i].Item2}: ожидается \"{expectedSymbol}\", подаётся \"{lexems[i].Item1}\"");
+                    errors.Add($"Строка {lexems[i].Item2}: пропущена лексема \"{expectedSymbol}\"");//, подаётся \"{lexems[i].Item1}\"");
                     lexems.Insert(i, (expectedSymbol, lexems[i].Item2));
                     i--;
                 }
