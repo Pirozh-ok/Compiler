@@ -305,37 +305,22 @@ namespace Compiler
         private void tbCode_TextChanged(object sender, EventArgs e)
         {
             isSave = false;
-            //динамическая подсветка синтаксиса
-            /* int mousePos = tbCode.SelectionStart; 
-
-             if (tbCode.Text != string.Empty)
-             {
-                 string currentWord = string.Empty;
-                 int j = tbCode.SelectionStart;
-                 int i = j - 1; 
-                 // выделяем слово в обе стороны
-                 while (i >= 0 && char.IsLetter(tbCode.Text[i]))
-                 {
-                     currentWord = currentWord.Insert(0, tbCode.Text[i].ToString());
-                     i--;
-                 }
-                 while (j < tbCode.Text.Length && char.IsLetter(tbCode.Text[j]))
-                 {
-                     currentWord = currentWord.Insert(currentWord.Length, tbCode.Text[j].ToString());
-                     j++; 
-                 }
-                 // ищем слово в словаре и если есть, окрашиваем
-                 if(!string.IsNullOrEmpty(currentWord))
-                     TextColors.AddColor(tbCode, currentWord, mousePos, i+1, j-1);
-             }*/
         }
 
+        private void OpenMicrosoftWord(string path)
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = "WINWORD.EXE";
+            startInfo.Arguments = path;
+            Process.Start(startInfo);
+        }
         private void tsCallingHelp_Click(object sender, EventArgs e)
         {
 
             try
             {
-                Process.Start(@"..\..\help\helpStateMachine.html");
+                //Process.Start(@"..\..\help\helpStateMachine.html");
+                OpenMicrosoftWord(@"C:\Users\ivan-\source\repos\TFLab\TFLab\help\helpRecursive.docx");
             }
             catch
             {

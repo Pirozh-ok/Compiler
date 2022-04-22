@@ -84,9 +84,9 @@ namespace TFLab
         {
             transitions.Add("-> <Дробное число>");
             int j = i;
-            while (Char.IsDigit(_text[j]))
+            while (j < _text.Length && Char.IsDigit(_text[j]))
                 j++;
-            if (_text[j] == '.')
+            if (j < _text.Length && _text[j] == '.')
             {
                 WholePart();
                 i++;
@@ -103,7 +103,7 @@ namespace TFLab
         public void Digit()
         {
             transitions.Add("-> <Цифра>");
-            while (Char.IsDigit(_text[i]))
+            while (i < _text.Length &&  Char.IsDigit(_text[i]))
                 i++;
             _result = true;
         }
@@ -125,7 +125,12 @@ namespace TFLab
                 {
                     _result = false;
                     return;
-                }else _result = true;
+                }
+                else
+                {
+                    i++;
+                    _result = true;
+                }
             }
             else
             {
