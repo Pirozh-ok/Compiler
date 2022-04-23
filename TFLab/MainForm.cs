@@ -329,12 +329,108 @@ namespace Compiler
 
         private void tsStart_Click(object sender, EventArgs e)
         {
-            if (currentOpenFile != null)
+            if (!string.IsNullOrEmpty(currentOpenFile))
             {
                 var resLexicalAnalyzer = LexicalAnalyzer.Analysis(tbCode.Text.Split('\n'));
                 var errors = UseStateMachine.StartAnalize(resLexicalAnalyzer.Item1, resLexicalAnalyzer.Item2);
                 tbResult.Text = ($"Количество ошибок {errors.Count}:\n{string.Join("\n", errors.ToArray())}");
                
+            }
+        }
+
+        private void постановкаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenMicrosoftWord(@"C:\Users\ivan-\source\repos\TFLab\TFLab\help\FormulationProblem.docx");
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось найти файл содержащий справку!");
+            }
+        }
+
+        private void грамматикаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenMicrosoftWord(@"C:\Users\ivan-\source\repos\TFLab\TFLab\help\Grammar.docx");
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось найти файл содержащий справку!");
+            }
+        }
+
+        private void классификацияГраматикиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenMicrosoftWord(@"C:\Users\ivan-\source\repos\TFLab\TFLab\help\Classification.docx");
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось найти файл содержащий справку!");
+            }
+        }
+
+        private void методАнализаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenMicrosoftWord(@"C:\Users\ivan-\source\repos\TFLab\TFLab\help\MethodAnalyse.docx");
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось найти файл содержащий справку!");
+            }
+        }
+
+        private void диагностикаИToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenMicrosoftWord(@"C:\Users\ivan-\source\repos\TFLab\TFLab\help\Diagnostics.docx");
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось найти файл содержащий справку!");
+            }
+        }
+
+        private void тестовыйПримерToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenMicrosoftWord(@"C:\Users\ivan-\source\repos\TFLab\TFLab\help\Test.docx");
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось найти файл содержащий справку!");
+            }
+        }
+
+        private void списокЛитературыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenMicrosoftWord(@"C:\Users\ivan-\source\repos\TFLab\TFLab\help\Bibliography.docx");
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось найти файл содержащий справку!");
+            }
+        }
+
+        private void исходныйКодПрограммыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenMicrosoftWord(@"C:\Users\ivan-\source\repos\TFLab\TFLab\help\Code.docx");
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось найти файл содержащий справку!");
             }
         }
     }
