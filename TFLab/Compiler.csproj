@@ -58,6 +58,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecurciveAnalyzer.cs" />
     <Compile Include="IRecursiveFunction.cs" />
+    <Compile Include="RegexTasks.cs" />
     <Compile Include="StateMachine.cs" />
     <Compile Include="TextColors.cs" />
     <Compile Include="UseStateMachine.cs" />

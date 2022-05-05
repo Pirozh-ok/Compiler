@@ -320,7 +320,8 @@ namespace Compiler
             try
             {
                 //Process.Start(@"..\..\help\helpStateMachine.html");
-                OpenMicrosoftWord(@"C:\Users\ivan-\source\repos\TFLab\TFLab\help\helpRecursive.docx");
+                //OpenMicrosoftWord(@"C:\Users\ivan-\source\repos\TFLab\TFLab\help\helpRecursive.docx");
+                OpenMicrosoftWord(@"C:\Users\ivan-\source\repos\TFLab\TFLab\help\helpRegex.docx");
             }
             catch
             {
@@ -332,9 +333,12 @@ namespace Compiler
         {
             if (currentOpenFile != null && tbCode.Text != "")
             {
-                RecurciveAnalyzer ra = new RecurciveAnalyzer(tbCode.Text);
+                //tbResult.Text = RegexTasks.Task1(tbCode.Text);
+                //tbResult.Text = RegexTasks.Task2(tbCode.Text);
+                tbResult.Text = RegexTasks.Task3(tbCode.Text);
+                /*RecurciveAnalyzer ra = new RecurciveAnalyzer(tbCode.Text);
                 var result = ra.StartAnalyze();
-                tbResult.Text = $"Результат проверки введённой строки: {result.Item1}. Порядок разбора: Исходная строка {result.Item2}";//UseStateMachine.StartAnalize(tbCode.Text.Split('\n'));//LexicalAnalyzer.Analysis(tbCode.Text);
+                tbResult.Text = $"Результат проверки введённой строки: {result.Item1}. Порядок разбора: Исходная строка {result.Item2}";//UseStateMachine.StartAnalize(tbCode.Text.Split('\n'));//LexicalAnalyzer.Analysis(tbCode.Text);*/
             }
         }
     }
